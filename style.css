@@ -23,86 +23,130 @@ body {
   padding: 1rem;
 }
 
-    /* ================= HERO HEADER ================== */
-    .hero-header {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      padding: 60px 20px 40px;
-      text-align: center;
-      color: white;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      position: relative;
-      overflow: hidden;
-    }
+ /* ========== NAVBAR ========== */
+.navbar {
+  background: crimson;
+  padding: 10px 20px;
+}
 
-    .hero-content {
-      max-width: 700px;
-      margin: auto;
-    }
+.navdiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 
-    .hero-logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 153, 0, 0.6);
-      animation: float 3s ease-in-out infinite;
-      transition: transform 0.3s ease;
-      margin-bottom: 20px;
-    }
+.logo a {
+  font-size: 35px;
+  font-weight: 600;
+  color: white;
+}
 
-    .hero-logo:hover {
-      transform: scale(1.1);
-    }
+ul {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
-    .hero-title {
-      font-size: 3rem;
-      font-weight: 900;
-      color: #ff9900;
-      margin: 10px 0;
-      letter-spacing: 1.5px;
-    }
+li {
+  list-style: none;
+  display: inline-block;
+}
 
-    .hero-subtitle {
-      font-size: 1.3rem;
-      background: linear-gradient(to right, #ffcc70, #ffffff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 30px;
-      font-weight: 500;
-    }
+li a {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 25px;
+}
 
-    /* ================= SEARCH BOX ================== */
-    .search-box {
-      position: relative;
-      max-width: 500px;
-      margin: auto;
-    }
+/* Buttons */
+button {
+  background-color: black;
+  margin-left: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  width: 90px;
+  border: none;
+}
 
-    .search-box input {
-      width: 100%;
-      padding: 14px 45px 14px 16px;
-      border-radius: 12px;
-      border: none;
-      font-size: 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      outline: none;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      backdrop-filter: blur(10px);
-    }
+button a {
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+}
 
-    .search-box input::placeholder {
-      color: #eee;
-    }
+/* ========== SEARCH BOX ========== */
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin: 10px 20px;
+  flex-shrink: 0;
+}
 
-    .search-icon {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.1rem;
-      opacity: 0.8;
-      color: white;
-    }
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 8px;
+  border-radius: 20px;
+  font-size: 14px;
+  width: 300px;
+}
+
+.search-icon {
+  margin-left: 8px;
+  font-size: 18px;
+  color: black;
+  cursor: pointer;
+}
+
+/* ========== HERO HEADER (Optional) ========== */
+.hero-header {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  padding: 60px 20px 40px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: auto;
+}
+
+.hero-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 153, 0, 0.6);
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.hero-logo:hover {
+  transform: scale(1.1);
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ff9900;
+  margin: 10px 0;
+  letter-spacing: 1.5px;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  background: linear-gradient(to right, #ffcc70, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
 
     /* ========== Animation ========== */
     @keyframes float {
