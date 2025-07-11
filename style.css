@@ -66,6 +66,8 @@ body {
 .search-box {
   display: flex;
   align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
   background: white;
   border-radius: 20px;
   padding: 5px 10px;
