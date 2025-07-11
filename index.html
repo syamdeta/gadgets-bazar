@@ -23,28 +23,28 @@
 </head>
 <body>
   <!-- Hero Header -->
-<nav class="navbar">
-  <div class="navdiv">
-    
+<nav class="bg-red-600 text-white p-4">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+
     <!-- Logo -->
-    <div class="logo">
-      <a href="#">Gadgets Bazar</a>
+    <div class="text-3xl font-bold mb-2 md:mb-0">
+      <a href="#" class="underline">Gadgets Bazar</a>
     </div>
 
     <!-- Search Box -->
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search for gadgets...">
-      <span class="search-icon">🔍</span>
+    <div class="flex items-center mb-2 md:mb-0 w-full md:w-auto">
+      <input type="text" placeholder="Search for gadgets..." class="w-full md:w-72 p-2 rounded-l-full text-black">
+      <button class="bg-white text-black px-3 py-2 rounded-r-full">🔍</button>
     </div>
 
-    <!-- Navigation Links -->
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#">Contact</a></li>
-      <button><a href="#">SignIn</a></button>
-      <button><a href="#">SignUp</a></button>
-    </ul>
+    <!-- Nav Links -->
+    <div class="flex flex-col md:flex-row items-center gap-4 mt-2 md:mt-0">
+      <a href="#" class="underline">Home</a>
+      <a href="#about" class="underline">About</a>
+      <a href="#" class="underline">Contact</a>
+      <a href="#" class="bg-black text-white px-4 py-2 rounded-md">SignIn</a>
+      <a href="#" class="bg-black text-white px-4 py-2 rounded-md">SignUp</a>
+    </div>
 
   </div>
 </nav>
