@@ -70,7 +70,7 @@ body {
   border-radius: 20px;
   padding: 5px 10px;
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
 }
 
 .search-box input {
@@ -83,6 +83,7 @@ body {
 .search-icon {
   font-size: 18px;
   margin-left: 10px;
+  margin-right: 10px;
   cursor: pointer;
 }
 
