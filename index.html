@@ -1,632 +1,1341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Speed Optimization -->
-  <link rel="dns-prefetch" href="https://m.media-amazon.com">
-  <link rel="preconnect" href="https://m.media-amazon.com" crossorigin>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadgets Bazar - Discover Amazing Gadgets & More</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gadgets Bazar - Product Recommendations</title>
-  <meta name="description" content="Discover trending and useful Amazon products curated by Pixsure Media. Earn commissions through affiliate links." />
-  <meta name="keywords" content="Pixsure Media, Amazon products, affiliate links, trending items, reviews" />
-  <meta name="author" content="Pixsure Media" />
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
 
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 107, 53, 0.6); }
+        }
+
+        /* Header - Fixed alignment */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(45, 45, 45, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 15px 30px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #007bff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            animation: bounce 2s infinite;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .nav-menu a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Hero Section - Fixed alignment */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: #000;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 .white-text {
+            color: #fff;
+        }
+
+        .hero h1 .gold-text {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s infinite;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 50px;
+            font-weight: 400;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        /* Search Box - Fixed alignment */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 60px;
+            background: rgba(45, 45, 45, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 0 180px 0 30px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #ff6b35;
+            animation: glow 2s infinite;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            bottom: 8px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border: none;
+            border-radius: 22px;
+            padding: 0 30px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .search-button:hover {
+            transform: scale(1.05);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Category Pills - Fixed alignment */
+        .category-pills {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .category-pill {
+            background: rgba(45, 45, 45, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 12px 25px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .category-pill:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: translateY(-5px);
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        /* Trust Indicators Section */
+        .trust-section {
+            padding: 80px 20px;
+            background: rgba(20, 20, 20, 0.5);
+            text-align: center;
+        }
+
+        .trust-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .trust-item {
+            padding: 30px;
+            background: rgba(45, 45, 45, 0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .trust-item:hover {
+            transform: translateY(-10px);
+            background: rgba(45, 45, 45, 0.5);
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        .trust-icon {
+            font-size: 3rem;
+            color: #ff6b35;
+            margin-bottom: 20px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .trust-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .trust-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        /* Featured Products Section - Fixed alignment */
+        .featured-section {
+            padding: 100px 20px;
+            background: #000;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            animation: slideInRight 1s ease-out;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+            justify-items: center;
+        }
+
+        /* Product Cards - Fixed alignment and animations */
+        .product-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 380px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.3s; }
+        .product-card:nth-child(3) { animation-delay: 0.5s; }
+        .product-card:nth-child(4) { animation-delay: 0.7s; }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+            animation: glow 2s infinite;
+        }
+
+        .product-image-container {
+            position: relative;
+            height: 250px;
+            background: #f5f5f5;
+            border-radius: 20px 20px 0 0;
+            overflow: hidden;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        .badge-pick {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+        }
+
+        .badge-popular {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+        }
+
+        .badge-trending {
+            background: linear-gradient(135deg, #f472b6, #ec4899);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b35;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .product-cta {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Deals Banner */
+        .deals-banner {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .deals-content {
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .deals-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        .deals-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+
+        .deals-cta {
+            background: #fff;
+            color: #ff6b35;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .deals-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            padding: 100px 20px;
+            background: rgba(20, 20, 20, 0.3);
+        }
+
+        .reviews-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .reviews-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 60px;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .review-card {
+            background: rgba(45, 45, 45, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            background: rgba(45, 45, 45, 0.8);
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        .review-stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .review-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .review-author {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+
+        /* Newsletter Section - Fixed alignment */
+        .newsletter-section {
+            padding: 80px 20px;
+            background: #000;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .newsletter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(45, 45, 45, 0.3);
+            border-radius: 20px;
+            padding: 50px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .newsletter-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        .newsletter-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .newsletter-input:focus {
+            border-color: #ff6b35;
+            animation: glow 2s infinite;
+        }
+
+        .newsletter-button {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-button:hover {
+            transform: scale(1.05);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Footer - Fixed alignment */
+        .footer {
+            background: #111;
+            padding: 60px 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .footer-section h4 {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            line-height: 2;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo-icon {
+            width: 28px;
+            height: 28px;
+            background: #007bff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .footer-logo-text {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon.twitter {
+            background: #1da1f2;
+        }
+
+        .social-icon.instagram {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        }
+
+        .social-icon.pinterest {
+            background: #bd081c;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-top:hover {
+            transform: scale(1.1);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                position: relative;
+                top: 0;
+                transform: none;
+                left: auto;
+                margin: 20px;
+                border-radius: 15px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content {
+                padding-top: 100px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .trust-container {
+                grid-template-columns: 1fr;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .search-input {
+                padding-right: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-pills {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .deals-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Loading animation for images */
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
 </head>
 <body>
-  <!-- Hero Header -->
-<body>
-  <!-- Hero Header -->
-<nav class="navbar">
-  <div class="logo">
-    <a href="#">Gadgets Bazar</a>
-  </div>
-
-  <ul class="nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
-
-  <div class="auth-buttons">
-    <button><a href="#">SignIn</a></button>
-    <button><a href="#">SignUp</a></button>
-  </div>
-
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search for gadgets..." />
-    <span class="search-icon">🔍</span>
-  </div>
-</nav>
-
-
- <!-- <header class="site-header">
-  <div class="container">
-    <img src="gadjetsbazar.jpg" alt="Gadjets Bazar Logo" class="logo" />
-    <div class="header-text">
-      <h1>Gadjets Bazar</h1>
-      <p class="subtitle">Smart Amazon Product Picks</p>
-    </div>
-  </div>
-</header>
-
-  <section class="search-section">
-    <div class="container">
-      <input type="text" id="searchInput" placeholder="Search for products...">
-    </div>
-  </section>-->
-  <main class="products-grid container">
-    <!-- Product #1 -->
-
-<!-- Product #39 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3HV3yCE" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71YoQ4uf9BL._UF894,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#39 TE Push Stapler 2 Pack</h2>
-      <p>TE Push Stapler 2 Pack, Mini Office Supplies Paper Staplers with 100 Pcs Reusable Clips, Binder Clips Paper Clamps Desktop Stapler, Clam Clip Dispenser for Office Document Home School Supplies</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #38 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4lQDVAX" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61h1s3iyLtL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#38 Amazon Basics Expanding File Folder with 13 Pockets</h2>
-      <p>Amazon Basics Expanding File Folder with 13 Pockets, Letter Size, Also Fits A4 Size Documents (Black)</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #37 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3JRwtYQ" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61EognUyqAL._UF894,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#37 InstaCuppa Electric Chopper for Kitchen Use with 3 Attachments</h2>
-      <p>InstaCuppa Electric Chopper for Kitchen Use with 3 Attachments, 2 Litre Stainless Steel Meat Mincer, 300W Vegetable Cutter Machine with Garlic Peeler and Egg Whisker, Carrot Grater for Busy Moms</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #36 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3Vhghmb" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/51Im2A-6JmL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#36 ULTRAMAC® 24 inch 3mm Acrylic TV Screen Guard</h2>
-      <p>ULTRAMAC® 24 inch 3mm Acrylic TV Screen Guard | 9H Hardness | Scratch & Splash Resistant | ISO Certified Protection with Ultra HD Clarity</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #35 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4mxUmU3" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/515hLdV2shL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#35 KACA 13-Inch Monitor Screen Light Bar with Smart Touch Sensor</h2>
-      <p>KACA 13-Inch Monitor Screen Light Bar with Smart Touch Sensor| USB Powered 5W LED E-Reading Lamp| 3 Color Temperature Modes, Stepless Dimming,60-Min Timer (Black, Acrylonitrile Butadiene Styrene)</p>
-    </div>
-  </a>
-</div> 
-
-
-
-<!-- Product #34 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3ULAO27" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/a4c04f29-685d-40db-a08c-850ee275ed48.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#34 12-in-1 Manicure Set Nail Clippers, Stainless Steel Grooming Kit</h2>
-      <p>12-in-1 Manicure Set Nail Clippers, Stainless Steel Grooming Kit with Scissors, Blackhead & Acne Tool, Pedicure Kit in Leather Travel Case – for Men & Women</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #33 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3JPCHs8" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71tqOVRtJbL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#33 VYOOx Smarty 2 in 1 Soap Dispenser</h2>
-      <p>CARESMITH Bloom Callus Remover For Feet Electronic | Foot Scrubber For Dead Skin | 3 Crystal Quartz Heads Suitable For Dead Skin Remover | Pedicure Kit For Women As Foot Cleaner</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #32 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4fRb7Hc" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61SmcNl+FfL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#32 VYOOx Smarty 2 in 1 Soap Dispenser</h2>
-      <p>VYOOx Smarty 2 in 1 Soap Dispenser+6 Pice Dish Cloth for Dishwasher Liquid Holder, Liquid Dispenser Through Pump with Sponge</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #31 -->  
-<div class="product-card">
-  <a href="https://amzn.to/41ibxjM" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/815GvV+L03L._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#31 Bosch Home & Garden Electric Cleaning Brush</h2>
-      <p>Bosch Home & Garden Electric Cleaning Brush, Cordless, Rechargeable via USB, Powerful Motor, for Kitchen, Bathroom, Shoes, Furniture & More, IPX5 Water Resistant, 3.6 V Integrated Battery</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #31 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4fLOaVL" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/41NivF6WEpL._UF894,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#31 5 In 1 Electric Cleaning Magic Brush Multifunctional Spin Cleaner Brush</h2>
-      <p>5 In 1 Electric Cleaning Magic Brush Multifunctional Spin Cleaner Brush With 5 Brush Heads and Charging Cord For Multi Use Kitchen Tiles Carpet Sink Basin Bathroom Dish Pots Wall Shoe Car Surfaces (1)</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #30 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3HEFILp" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/614cJhOw+TL.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#30 Zeitel® Mini Bluetooth Thermal Printer, Portable Label Printer</h2>
-      <p>Zeitel® Mini Bluetooth Thermal Printer, Portable Label Printer Inkfree Printer for Android & iOS System, Black on White Thermal Printer with 13 Roll of Print Paper, Stickers, Pink</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #29 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4mL2Si3" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71qLw4ghxwL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#29 SWAPKART Flexible Mobile Tabletop Stand</h2>
-      <p>SWAPKART Flexible Mobile Tabletop Stand, Metal Built, Heavy Duty Foldable Lazy Bracket Clip Mount Multi Angle Clamp for All Smartphones (Pack of 1), Multi Color</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #28 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4ltVPcA" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71Hxw4B1knL._SL1500_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#28 AGARO Percussion Muscle Ring Massager</h2>
-      <p>AGARO Percussion Muscle Ring Massager, 5 Speed Setting, 2 Modes, Rechargeable, Deep Tissue Percussion Mini Gun Massager for Full Body Pain Relief & Relaxation for Men and Women, Lilac</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #27 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3UlPXqH" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71PQ0g582mL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#27 Portronics Bluetooth Speaker & Makeup Mirror</h2>
-      <p>Portronics MOVO 3 in 1 Wireless Charger with 5W Bluetooth Speaker & Makeup Mirror, Qi2 Certified 15W Wireless Charging, 3 LED Lights with Adjustable Intensity, 90° Adjustable Mirror, Type C Input</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #26 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4lfpV3v" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61gIW4Izb4L._UF894,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#26 SELLASTIC Period Cramp Relief Heating Pad Massager</h2>
-      <p>SELLASTIC Period Cramp Relief Heating Pad Massager | Portable Cordless Menstrual Pain Relief Massage with 3 Heat Modes & 3 Massage Modes | Bigger Front LED Display with Battery & Temperature Indication | Back & Belly Heating Pad for Women</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #25 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4mrdzpU" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/611q3D1grKL._UF1000,1000_QL80_FMwebp_.jpg"  />
-    <div class="product-details">
-      <h2>#25 Powernugget 5000mAh 23W Fast Charging Type C Power Bank</h2>
-      <p>CALLMATE Powernugget 5000mAh 23W Fast Charging Type C Power Bank with 23W Type C PD Input & Output, Compatible with Samsung Type C Phones, Tablets (Type-C, Li-Ion, Black)</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #24 -->  
-<div class="product-card">
-  <a href="https://amzn.to/47lJsf7" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61Y8u2y5XOL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#24 Fire-Boltt Phoenix Pro Smart Watch</h2>
-      <p>Fire-Boltt Phoenix Pro Smart Watch 1.39 inch Bluetooth Calling, AI Voice Assistant, Metal Body with 120+ Sports Modes, SpO2, Heart Rate Monitoring (Black)</p>
-    </div>
-  </a>
-</div> 
-
-
-<!-- Product #23 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4m5r5j0" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/51zArrygQ8L._UF894,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#23 Umi Vintage Twin Bell Alarm Clock</h2>
-      <p>Amazon Brand - Umi Vintage Twin Bell Alarm Clock, Battery Operated with Night Backlight & Silent Movement for Bedroom & Office (Black)</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #22 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3UwxpnT" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/41dBhCUHFPL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#22 Himster Wireless Doorbell</h2>
-      <p>Himster Wireless Doorbell, Waterproof Door Bell Chime Kit Alarm for Home at Upto 1000 Feet Range Operating with 56 Melodies, LED Flash, 7 Levels Adjustable Volume (Black 1 Transmitter & 1 Receiver)</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #21 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4oAcApp" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/6150XmkOQsL._UF894,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#21 Eopora Automatic Water Dispenser Pump</h2>
-      <p>Eopora Automatic Water Dispenser Pump for 20 Litre Bottle, 1200Mah Battery USB Rechargeable Electric Foldable Water Can Dispenser for Home Office, Black</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #20 -->  
-<div class="product-card">
-  <a href="https://amzn.to/40Mz5x0" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/51gkg+w5GkL.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#20 InstaCuppa Portable Electric Kettle</h2>
-      <p>InstaCuppa Portable Electric Kettle With Temperature Control, Travel Electric Water Bottle For Boiling Hot Water with Cool Touch Exterior, Automatic Shut Off, Dry Boil Protection, 500 ML, 300 Watts</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #19 -->  
-<div class="product-card">
-  <a href="https://amzn.to/45nt4cA" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71AJQDhvdpL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#19 Robustt Cable Oragnizer</h2>
-      <p>Robustt Cable Oragnizer - Black (Pack of 1) | 30 MM Diameter Cable Sleeve | 1.5 Meter Cable Organiser with Clip Zipper | Flexible | Protect Cats Dogs Pets from Chewing Cords</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #18 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3H2GZvm" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/2db23195-251e-4830-b24f-6f016208edb3.__CR0,0,600,450_PT0_SX600_V1___.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#18 Urban yog MakeMeeBold 3-in-1 Hot Air Brush</h2>
-      <p>Urban yog MakeMeeBold 3-in-1 Hot Air Brush| 1.5-inch Barrel | Hair Dryer Hair Straightener Volumizer Blow Dryer Styling Tool,1200 Watt, Multicolour</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #17 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3IHg34Y" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61waHDxO54L._UF894,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#17 Goodscity Multipurpose Electric Kettle</h2>
-      <p>Goodscity Multipurpose Electric Kettle with Ceramic Coating 1.2L|Boil, Steam, Fry, Saute|Multi Cooker kettle for Water,Milk,Egg, Tea,Soup,Coffee, Babyfood, Hostel,Travelling,600W,1Year Waranty GC-0191</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #16 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4nZcW8n" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/4b0f9e70-c746-4059-a8ad-21480ecaab2d.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#16 kahula Ultrasonic Cleaner Machine</h2>
-      <p>kahula Ultrasonic Cleaner Machine Ultrasonic Jewelry Cleaner Machine With Digital Timer For Glasses, Ring, Earring, Necklaces, Jewelry,Watch Strap</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #15 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4ly8Q5C" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/5180qAE25rL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#15 Lifelong Rechargeable Electric Head & Scalp Kneading Massager</h2>
-      <p>boAt Lifelong Rechargeable Electric Head & Scalp Kneading Massager, 4 Speed Modes, Handheld Portable Head Massager for Hair Growth, Deep Clean and Stress Relieving, (LLM603, Black)</p>
-    </div>
-  </a>
-</div> 
-<!-- Product #14 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4f1NLhB" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61Q68Y3ikGL._UF1000,1000_QL80_FMwebp_.jpg" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#14 boAt New Launch SmartRing</h2>
-      <p>boAt New Launch SmartRing Active Plus, Auto Heart Rate, Sleep, SpO2, Stress & Skin Temperature Monitor, Stainless-Steel Build, Lightweight, 30-Days Battery, Magnetic Charging Case(9, Midnight Black)</p>
-    </div>
-  </a>
-</div> 
-<!-- Product #13 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3GSFGPw" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/ff76f761-c35b-4c16-9c66-e25141d3a6f6.__CR0,0,970,600_PT0_SX970_V1___.png" alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#13 Qubo Wired Bike GPS Tracker from Hero </h2>
-      <p>【Live Location Tracking With Ride History】Track Real-Time Location With Pinpoint GPS Accuracy. Access Up To 6 Months Of Ride History (Extended To 12 Months With Pro Plus Plan) Directly From The Qubo Go App. </p>
-    </div>
-  </a>
-</div> 
-<!-- Product #12 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4eUMFUA" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/6e57a177-497b-4759-8ff9-5d672f767105.__CR0,0,600,450_PT0_SX600_V1___.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#12 CostarMatter Clothes Warmer, Mini Portable Heater with PTC Heating  </h2>
-      <p>Customers find the clothes warmer effective and appreciate that it helps dry clothes quickly, even in cold weather, with the ability to dry 4-5 pieces at a time. </p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #11 -->  
-<div class="product-card">
-  <a href="https://amzn.to/44ydg6F" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/5a2b2a34-258a-4283-a9ca-325b5f86fa9a.__CR0,0,2021,1250_PT0_SX970_V1___.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#11 Ambrane 50000mAh Powerbank, 20W Fast Charging, Triple Output (2 USB & 1 Type C)  </h2>
-      <p>Customers find the power bank to be a great travel companion that's easy to carry in hand baggage, with impressive build quality and huge power capabilities.</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #10 -->  
-<div class="product-card">
-  <a href="https://amzn.to/40RKuvf" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/6118KpFC+8L._UF1000,1000_QL80_FMwebp_.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#10 Brago Electric Hair Oil Applicator and Scalp Head Massager  </h2>
-      <p>Customers have mixed experiences with the hair oil applicator's oil dispensation, with some finding it practical for daily use while others report issues with proper delivery.</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #9 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4f3zu49" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/db2cee73-e72f-4c20-99de-46f516b9de9e.__CR0,0,970,600_PT0_SX970_V1___.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#9 Wipro Odyssey Multifunctional Rechargeable LED Emergency Light </h2>
-      <p>Customers find the emergency light works well and appreciate its amazing light intensity, reliable backup capabilities, and ability to withstand rough handling.</p>
-    </div>
-  </a>
-</div> 
- 
-<!-- Product #8 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4eKYxc3" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61fUcdgMzrL._SL1500_.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#8 Nutricook Stainless Steel Smart Pot 2 </h2>
-      <p>Customers find the pressure cooker reliable and easy to use, particularly appreciating how it saves time on busy days.</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #7 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4eD1Hye" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/2a7c9a3e-cb8a-4942-bd80-1b3d0d634d93.__CR0,0,600,450_PT0_SX600_V1___.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#7 COSTAR Cordless Hair Straightener Brush - Portable Straightening Brush</h2>
-      <p>Customers find the hair straightener perfect for travel and daily use, appreciating its lightweight design that fits easily in bags.</p>
-    </div>
-  </a>
-</div> 
-<!-- Product #6 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3Igkgwg" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/41RP0wfxQWL._UF894,1000_QL80_FMwebp_.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#6 VANTRO 10L Portable Fridge Model</h2>
-      <p>Customers find the portable fridge works well and appreciate its high-quality design, compact size, and convenience for travel, particularly for carrying medication.</p>
-    </div>
-  </a>
-</div> 
-<!-- Product #5 -->  
-<div class="product-card">
-  <a href="https://amzn.to/40GyVHb" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71Qb0m6xQvL._UF1000,1000_QL80_FMwebp_.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#5 Xiaomi Ultra Slim Power Bank</h2>
-      <p>Customers appreciate the power bank's compact size, with one mentioning it's pocket-friendly for emergency use.</p>
-    </div>
-  </a>
-</div> 
-<!-- Product #4 -->  
-<div class="product-card">
-  <a href="https://amzn.to/4nBgfCz" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71aeecYS2gL._SL1500_.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#4 AGARO ROYAL AC Power Automatic Foot Spa Bath Massager With Heat</h2>
-      <p>Customers find this foot spa massager to be a fantastic product that provides a spa-like experience at home, with automatic rollers hitting all the right pressure points.</p>
-    </div>
-  </a>
-</div> 
-
-<!-- Product #3 -->  
-<div class="product-card">
-  <a href="https://amzn.to/44fAJcB" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71UtiZikJ1L._SL1500_.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#3 InstaCuppa Portable Soda Maker</h2>
-      <p>Customers find the soda maker easy to use and appreciate its versatility for experimenting with different mocktails. </p>
-    </div>
-  </a>
-</div> 
-    <!-- Product #2 -->  
-<div class="product-card">
-  <a href="https://amzn.to/3IbMTuw" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61i+fGyxZCL._SX679_.jpg"alt="#2 COSTAR Automatic Umbrella"  />
-    <div class="product-details">
-      <h2>#2 COSTAR Automatic Umbrella with Light Design Foldable</h2>
-      <p>Customers find this umbrella to be of good quality with a smooth auto open and close mechanism, and appreciate its torch light feature for night use. </p>
-    </div>
-  </a>
-</div>
-
-<div class="product-card">
-  <a href="https://amzn.to/4nPpyiH" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/51agIZG4f6L._SL1080_.jpg" alt="#1 NexLev Steam Cleaner" />
-    <div class="product-details">
-      <h2>#1 NexLev Steam Cleaner</h2>
-      <p>Customers find this steam cleaner to be the best tool they've used, with powerful steam that effectively loosens dirt and grime, particularly for kitchen burner stains.</p>
-    </div>
-  </a>
-</div>
-
-
-<div class="product-card">
-  <a href="https://www.amazon.in/boAt-Airdopes-Multidevice-Bluetooth-Earphones/dp/B0F8BVYRWS?pd_rd_w=P22wW&content-id=amzn1.sym.7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_p=7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_r=ZBDDKXPZR3DEY957A5EZ&pd_rd_wg=kI3bs&pd_rd_r=167003c5-e9e2-4b21-8183-d19da90c7f38&pd_rd_i=B0F8BVYRWS&th=1&linkCode=sl1&tag=jaydeals0f4-21&linkId=4cecf8ab37304b9c2f20c9188e428ecc&language=en_IN&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/81w9ih+LYSL._SL1500_.jpg" alt="Product #5 - Power Bank" />
-    <div class="product-details">
-      <h2>boAt Airdopes Prime 701 ANC (2025 Launch) TWS Ear Buds Wireless Earphones with mic (Obsidian Grey)</h2>
-      <p>Customers praise these earbuds for their amazing sound quality, with one noting crystal-clear precision, and appreciate their professional-grade build. </p>
-    </div>
-  </a>
-</div>
-
-<div class="product-card">
-  <a href="https://www.amazon.in/boAt-Airdopes-Alpha-Wireless-Earbuds/dp/B0C3ZYFZ77/ref=asc_df_B0C3ZYFZ77?mcid=d17bcda88e3c37268e9b1eb350dae758&tag=googleshopdes-21&linkCode=df0&hvadid=710141150090&hvpos=&hvnetw=g&hvrand=13073845556360128916&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9062050&hvtargid=pla-2296655777273&gad_source=1&th=1" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61vHUffJazL._SL1500_.jpg" alt="Product #1 - Wireless Earbuds" />
-    <div class="product-details">
-      <h2>Boat Airdopes Joy TWS Ear Buds Wireless Earphones with mic</h2>
-      <p>Customers praise these earbuds for their amazing sound quality with 50-hour playback, 15-hour battery life, and seamless Bluetooth 5.3 connectivity. </p>
-    </div>
-  </a>
-</div>
-
-<div class="product-card">
-  <a href="https://www.amazon.in/PEXPO-Certified-Stainless-Purple-Pink-Friendly/dp/B0DRCYP93L?pd_rd_w=HT8j9&content-id=amzn1.sym.7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_p=7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_r=JT0D8VX4YMHFA550TK36&pd_rd_wg=2TRLb&pd_rd_r=df3a27f4-6551-4cee-a7fc-8c771a1a8fbf&pd_rd_i=B0DRCYP93L&psc=1&linkCode=sl1&tag=jaydeals0f4-21&linkId=c9af122146398e5263108bebcebd83c6&language=en_IN&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/61LDoO9Jl7L._SL1500_.jpg" alt="Product #3 - Bluetooth Speaker" />
-    <div class="product-details">
-      <h2>PEXPO Craft Pro 1000 ISI Certified Stainless Steel Sports/Fridge Water Bottle with Sipper Cap</h2>
-      <p>Customers find the water bottle convenient for daily travel and office use, appreciating its lightweight steel construction and premium appearance. </p>
-    </div>
-  </a>
-</div>
-
-<div class="product-card">
-  <a href="https://www.amazon.in/NutriPro-Bullet-Juicer-Grinder-Blades/dp/B09J2T124D?pd_rd_w=HT8j9&content-id=amzn1.sym.7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_p=7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_r=JT0D8VX4YMHFA550TK36&pd_rd_wg=2TRLb&pd_rd_r=df3a27f4-6551-4cee-a7fc-8c771a1a8fbf&pd_rd_i=B09J2T124D&th=1&linkCode=sl1&tag=jaydeals0f4-21&linkId=fe4e8fca018ae95609c2abd7cc311d60&language=en_IN&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71PkRff5mdL._SL1500_.jpg" alt="Product #5 - Power Bank" />
-    <div class="product-details">
-      <h2>NutriPro Juicer Mixer Grinder - Smoothie Maker </h2>
-      <p>Customers find the blender to be a solid appliance that's easy to use for making smoothies and juices, with a powerful motor that handles everything from smoothies to chutney.</p>
-    </div>
-  </a>
-</div>
-
-
-<div class="product-card">
-  <a href="https://www.amazon.in/Amazon-Basics-Premium-Cloth-Drying/dp/B0DY4XZQ8L?pd_rd_w=OIGcL&content-id=amzn1.sym.7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_p=7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_r=X8KAS13082CX21VBJ5C3&pd_rd_wg=BsInI&pd_rd_r=59ce4f59-2176-4e61-b9f9-9ebe2a66868a&pd_rd_i=B0DY4XZQ8L&th=1&linkCode=sl1&tag=jaydeals0f4-21&linkId=daef948be2adfbb029dc30918b39ca22&language=en_IN&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71vkps3XMVL._SL1500_.jpg" alt="Premium Cloth Drying Stand - 3 Way Folding" />
-    <div class="product-details">
-      <h2>Premium Cloth Drying Stand - 3 Way Folding</h2>
-      <p>Customers find these hangers to be of good quality, well-designed, and practical for everyday use, particularly noting their suitability for shirts and strip dresses.</p>
-    </div>
-  </a>
-</div>
-
-
-
-
-<div class="product-card">
-  <a href="https://www.amazon.in/One94store-Astronaut-Galaxy-Projector-Night/dp/B0DN1RWNSQ?pd_rd_w=HT8j9&content-id=amzn1.sym.7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_p=7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_r=JT0D8VX4YMHFA550TK36&pd_rd_wg=2TRLb&pd_rd_r=df3a27f4-6551-4cee-a7fc-8c771a1a8fbf&pd_rd_i=B0DN1RWNSQ&th=1&linkCode=sl1&tag=jaydeals0f4-21&linkId=d0658df4f8d4529217048a138684977b&language=en_IN&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71E6Z0oTisL._SL1500_.jpg" alt="Product #4 - Gaming Mouse" />
-    <div class="product-details">
-      <h2>One94store Astronaut Galaxy Projector Night Light – 360° Rotating Nebula Star Projector with Remote Control, Timer & Adjustable Head</h2>
-      <p>Customers find the night light to be of good quality and appreciate its appearance, particularly how it looks in the dark.</p>
-    </div>
-  </a>
-</div>
-
-<!-- Product #5 -->
-<div class="product-card">
-  <a href="https://www.amazon.in/TEKCOOL-Umbrella-Protection-Windproof-case/dp/B0F42YH8K6?pd_rd_w=kQyMk&content-id=amzn1.sym.7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_p=7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_r=JT0D8VX4YMHFA550TK36&pd_rd_wg=2TRLb&pd_rd_r=df3a27f4-6551-4cee-a7fc-8c771a1a8fbf&pd_rd_i=B0F42YH8K6&th=1&linkCode=sl1&tag=jaydeals0f4-21&linkId=484165268b4bd8ab46ad32080a764b6e&language=en_IN&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/415HbMuaT+L.jpg" alt="Product #5 - Power Bank" />
-    <div class="product-details">
-      <h2>TEKCOOL UV Big Size Umbrella for Sun Protection Rain Windproof Strong large 2 fold</h2>
-      <p>Customers find the umbrella to be of good quality, lightweight, and easy to carry in bags, making it suitable for travel.</p>
-    </div>
-  </a>
-</div>
-
-<div class="product-card">
-  <a href="https://www.amazon.in/Skybags-Premium-Polyester-Adjustable-Backpack/dp/B0D1G32M32?pd_rd_w=kQyMk&content-id=amzn1.sym.7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_p=7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_r=JT0D8VX4YMHFA550TK36&pd_rd_wg=2TRLb&pd_rd_r=df3a27f4-6551-4cee-a7fc-8c771a1a8fbf&pd_rd_i=B0D1G32M32&th=1&linkCode=sl1&tag=jaydeals0f4-21&linkId=04fd107cd84e3516a7c2b0691f479ea8&language=en_IN&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/611VkEgDqtL._SL1500_.jpg" alt="Product #5 - Power Bank" />
-    <div class="product-details">
-      <h2>Skybags Unisex Brat 20L Premium Polyester Adjustable Straps 4 Compartment Backpack</h2>
-      <p>Customers find this backpack to be of good quality, offering superb value for its price point and featuring a simple style. </p>
-    </div>
-  </a>
-</div>
-
-
-
-
-<div class="product-card">
-  <a href="https://www.amazon.in/Robustt-Adjustable-Vibration-Suitable-Dishwasher/dp/B0DX75NPTD?pd_rd_w=xANWk&content-id=amzn1.sym.7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_p=7f3d66f6-5df6-41bc-b3bc-9782a34ce834&pf_rd_r=ZBDDKXPZR3DEY957A5EZ&pd_rd_wg=kI3bs&pd_rd_r=167003c5-e9e2-4b21-8183-d19da90c7f38&pd_rd_i=B0DX75NPTD&psc=1&linkCode=sl1&tag=jaydeals0f4-21&linkId=f3204ebc1241c52b99f46f0302f7a665&language=en_IN&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-    <img src="https://m.media-amazon.com/images/I/71Ly+bg4W8L._SL1500_.jpg" alt="Product #5 - Power Bank" />
-    <div class="product-details">
-      <h2>Robustt Washing Machine Stand- Adjustable Metal Trolley with Wheels for Home with 4 Anti Vibration Rubber Grips</h2>
-      <p>Customers find the washing machine stand to be a quality product that's sturdy and adjustable, with one mentioning it can be easily adjusted to fit different machine lengths.</p>
-    </div>
-  </a>
-</div>
-
-  
-<!-- Product #6 to #20... (truncated for space, can continue if needed) -->
-
-<!-- More products below... -->
-
-  </main>
- 
-<button id="backToTop" title="Go to top">↑</button>
-
-  <footer class="site-footer">
-    <div class="footer-container">
-      <p>&copy; 2025 Gadjets Bazar. All rights reserved.</p>
-      <p>Affiliate Disclosure: We may earn a commission on qualifying purchases made through our links.</p>
-      <div class="social-icons">
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Gadgetsbazarin@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
-        <a href="https://youtube.com/@gadgetsbazarin?si=Sl-D5jRbtS3Cl4yk" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.instagram.com/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/share/v/1Q4FGN8tsG/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-      </div>
-    </div>
-  </footer>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">T</div>
+                <span>Gadgets Bazar</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#featured">Featured</a></li>
+                <li><a href="#latest">Latest</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>
+                <span class="white-text">Discover Amazing</span><br>
+                <span class="gold-text">Gadgets & More</span>
+            </h1>
+            <p class="hero-subtitle">Curated collection of innovative products that make life<br>easier, more productive, and enjoyable</p>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for amazing products...">
+                <button class="search-button">Search</button>
+            </div>
+
+            <div class="category-pills">
+                <a href="#electronics" class="category-pill">Electronics</a>
+                <a href="#home" class="category-pill">Home & Kitchen</a>
+                <a href="#health" class="category-pill">Health & Beauty</a>
+                <a href="#office" class="category-pill">Office Supplies</a>
+                <a href="#travel" class="category-pill">Travel</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators Section -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="trust-title">100% Secure</h3>
+                <p class="trust-description">All affiliate links are verified and secure. Your privacy is our priority.</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3 class="trust-title">Best Deals</h3>
+                <p class="trust-description">We negotiate exclusive discounts and find the lowest prices for you.</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="trust-title">10,000+ Happy Customers</h3>
+                <p class="trust-description">Join thousands of satisfied customers who trust our recommendations.</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="trust-title">Updated Daily</h3>
+                <p class="trust-description">Fresh deals and new products added every day. Never miss out!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deals Banner -->
+    <section class="deals-banner">
+        <div class="deals-content">
+            <h2 class="deals-title">🔥 Limited Time Deals!</h2>
+            <p class="deals-subtitle">Get up to 70% off on selected gadgets. Hurry, these deals won't last long!</p>
+            <button class="deals-cta" onclick="scrollToFeatured()">Shop Deals Now</button>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-section" id="featured">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <p class="section-subtitle">Handpicked innovative gadgets and essentials that our community loves most</p>
+
+            <div class="products-grid">
+                <!-- NexLev Steam Cleaner -->
+                <div class="product-card" onclick="redirectToProduct('https://amazon.com/nexlev-steam-cleaner')">
+                    <div class="product-image-container">
+                        <div class="product-badge badge-pick">#1 Pick</div>
+                        <div class="product-image" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23ffffff%22 width=%22300%22 height=%22200%22/><g transform=%22translate(150,100)%22><circle r=%2230%22 fill=%22%23333%22/><rect x=%22-40%22 y=%22-10%22 width=%2280%22 height=%2220%22 rx=%2210%22 fill=%22%23666%22/><text y=%2260%22 text-anchor=%22middle%22 fill=%22%23999%22 font-family=%22Arial%22 font-size=%2212%22>Steam Cleaner</text></g></svg>')"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">NexLev Steam Cleaner</h3>
+                        <p class="product-description">Powerful steam cleaning with 15+ attachments</p>
+                        <div class="product-price">$89.99 <span style="text-decoration: line-through; color: #666; font-size: 1.2rem;">$149.99</span></div>
+                        <button class="product-cta">Get Best Deal Now</button>
+                    </div>
+                </div>
+
+                <!-- COSTAR Automatic Umbrella -->
+                <div class="product-card" onclick="redirectToProduct('https://amazon.com/costar-automatic-umbrella')">
+                    <div class="product-image-container">
+                        <div class="product-badge badge-popular">Popular</div>
+                        <div class="product-image" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23ffffff%22 width=%22300%22 height=%22200%22/><g transform=%22translate(150,100)%22><path d=%22M-50,-20 Q-30,-40 0,-20 Q30,-40 50,-20%22 stroke=%22%23333%22 stroke-width=%223%22 fill=%22none%22/><line x1=%220%22 y1=%22-20%22 x2=%220%22 y2=%2240%22 stroke=%22%23666%22 stroke-width=%224%22/><text y=%2260%22 text-anchor=%22middle%22 fill=%22%23999%22 font-family=%22Arial%22 font-size=%2212%22>Umbrella</text></g></svg>')"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">COSTAR Automatic Umbrella</h3>
+                        <p class="product-description">Wind-resistant with lifetime guarantee</p>
+                        <div class="product-price">$24.99 <span style="text-decoration: line-through; color: #666; font-size: 1.2rem;">$39.99</span></div>
+                        <button class="product-cta">Get Best Deal Now</button>
+                    </div>
+                </div>
+
+                <!-- InstaCuppa Portable Soda Maker -->
+                <div class="product-card" onclick="redirectToProduct('https://amazon.com/instacuppa-portable-soda-maker')">
+                    <div class="product-image-container">
+                        <div class="product-badge badge-trending">Trending</div>
+                        <div class="product-image" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23ffffff%22 width=%22300%22 height=%22200%22/><g transform=%22translate(150,100)%22><rect x=%22-15%22 y=%22-30%22 width=%2230%22 height=%2260%22 rx=%225%22 fill=%22%23333%22/><circle cx=%220%22 cy=%22-35%22 r=%228%22 fill=%22%23666%22/><text y=%2250%22 text-anchor=%22middle%22 fill=%22%23999%22 font-family=%22Arial%22 font-size=%2212%22>Soda Maker</text></g></svg>')"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">InstaCuppa Portable Soda Maker</h3>
+                        <p class="product-description">Make fresh sparkling water anywhere</p>
+                        <div class="product-price">$34.99 <span style="text-decoration: line-through; color: #666; font-size: 1.2rem;">$49.99</span></div>
+                        <button class="product-cta">Get Best Deal Now</button>
+                    </div>
+                </div>
+
+                <!-- AGARO ROYAL Foot Spa Massager -->
+                <div class="product-card" onclick="redirectToProduct('https://amazon.com/agaro-royal-foot-spa')">
+                    <div class="product-image-container">
+                        <div class="product-badge badge-pick">#1 Pick</div>
+                        <div class="product-image" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23ffffff%22 width=%22300%22 height=%22200%22/><g transform=%22translate(150,120)%22><ellipse cx=%220%22 cy=%220%22 rx=%2260%22 ry=%2230%22 fill=%22%23333%22/><circle cx=%22-20%22 cy=%22-10%22 r=%225%22 fill=%22%23666%22/><circle cx=%2220%22 cy=%22-10%22 r=%225%22 fill=%22%23666%22/><text y=%2250%22 text-anchor=%22middle%22 fill=%22%23999%22 font-family=%22Arial%22 font-size=%2212%22>Foot Spa</text></g></svg>')"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">AGARO ROYAL Foot Spa Massager</h3>
+                        <p class="product-description">Luxury home spa with heating & massage</p>
+                        <div class="product-price">$79.99 <span style="text-decoration: line-through; color: #666; font-size: 1.2rem;">$129.99</span></div>
+                        <button class="product-cta">Get Best Deal Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section" id="reviews">
+        <div class="reviews-container">
+            <h2 class="reviews-title">What Our Customers Say</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Amazing deals and genuine products! Got my steam cleaner at 40% off. The quality is exactly as described. Highly recommend!"</p>
+                    <div class="review-author">- Sarah M., Verified Buyer</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Best affiliate site for gadgets! They actually test the products before recommending. Saved me hundreds of dollars with their deals."</p>
+                    <div class="review-author">- Mike R., Tech Enthusiast</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Love the daily deal updates! The newsletter keeps me informed about the latest discounts. Never buying at full price again!"</p>
+                    <div class="review-author">- Emma L., Smart Shopper</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <h3 class="newsletter-title">🎉 Join 10,000+ Smart Shoppers!</h3>
+            <p class="newsletter-subtitle">Get exclusive deals, early access to sales, and insider reviews • No spam, unsubscribe anytime</p>
+            <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+                <input type="email" class="newsletter-input" placeholder="Enter your email for exclusive deals" required>
+                <button type="submit" class="newsletter-button">Get Deals</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">T</div>
+                    <span class="footer-logo-text">Gadgets Bazar</span>
+                </div>
+                <p>Your trusted source for innovative gadgets and lifestyle products that enhance daily living. We carefully curate and test every product to ensure quality and value.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <a href="#electronics">Electronics</a>
+                <a href="#home">Home & Kitchen</a>
+                <a href="#health">Health & Beauty</a>
+                <a href="#office">Office Supplies</a>
+                <a href="#travel">Travel Gear</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Company</h4>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#affiliate">Affiliate Disclosure</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <a href="#help">Help Center</a>
+                <a href="#returns">Returns Policy</a>
+                <a href="#shipping">Shipping Info</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact Support</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Gadgets Bazar. All rights reserved. • <strong>Affiliate Disclosure:</strong> We may earn commissions from purchases made through our links. This helps us provide you with the best deals and keep our service free.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Product redirect function with enhanced tracking
+        function redirectToProduct(affiliateUrl) {
+            // Add click tracking
+            console.log('Product clicked:', affiliateUrl);
+            
+            // Track for analytics (Google Analytics, Facebook Pixel, etc.)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'purchase_intent', {
+                    'event_category': 'affiliate_click',
+                    'event_label': affiliateUrl,
+                    'value': 1
+                });
+            }
+            
+            // Track for Facebook Pixel
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'InitiateCheckout');
+            }
+            
+            // Add subtle vibration for mobile users
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+            
+            // Open affiliate link in new tab
+            window.open(affiliateUrl, '_blank', 'noopener,noreferrer');
+        }
+
+        // Scroll to featured section
+        function scrollToFeatured() {
+            document.getElementById('featured').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Newsletter form handler
+        function handleNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            
+            // Add your newsletter signup logic here
+            console.log('Newsletter signup:', email);
+            
+            // Show success animation
+            const button = event.target.querySelector('button');
+            const originalText = button.textContent;
+            button.textContent = '✓ Subscribed!';
+            button.style.background = '#4ade80';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = 'linear-gradient(135deg, #ff6b35, #ff8c42)';
+                event.target.reset();
+            }, 2000);
+            
+            // Track newsletter signup
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'newsletter_signup', {
+                    'event_category': 'engagement',
+                    'event_label': email
+                });
+            }
+        }
+
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide scroll to top button
+        function toggleScrollButton() {
+            const scrollButton = document.getElementById('scrollTop');
+            if (window.pageYOffset > 300) {
+                scrollButton.classList.add('visible');
+            } else {
+                scrollButton.classList.remove('visible');
+            }
+        }
+
+        // Search functionality with animation
+        function initSearch() {
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+            
+            searchButton.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    // Add search functionality here
+                    console.log('Searching for:', query);
+                    
+                    // Animate button
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                    
+                    // You can redirect to search results or filter products
+                    // Example: window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                }
+            });
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchButton.click();
+                }
+            });
+        }
+
+        // Initialize animations on scroll
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.trust-item, .review-card, .product-card').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Add hover sound effect (optional)
+        function addHoverSounds() {
+            const buttons = document.querySelectorAll('.product-cta, .deals-cta, .newsletter-button');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    // You can add audio context here for hover sounds
+                    // const audioContext = new AudioContext();
+                    // Create subtle beep or click sound
+                });
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch();
+            initScrollAnimations();
+            addHoverSounds();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add parallax effect to hero section
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                }
+                
+                toggleScrollButton();
+            });
+
+            // Add loading complete animation
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Performance optimization: Lazy loading for images
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.classList.remove('loading');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        // Add cursor trail effect (optional eye-candy)
+        document.addEventListener('mousemove', (e) => {
+            // Create subtle cursor trail for premium feel
+            const trail = document.createElement('div');
+            trail.style.cssText = `
+                position: fixed;
+                width: 6px;
+                height: 6px;
+                background: rgba(255, 107, 53, 0.4);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                left: ${e.clientX - 3}px;
+                top: ${e.clientY - 3}px;
+                animation: fadeOut 1s ease-out forwards;
+            `;
+            
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                document.body.removeChild(trail);
+            }, 1000);
+        });
+
+        // Add fade out animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: scale(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
